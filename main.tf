@@ -1,18 +1,3 @@
-/**
- * valiable
- **/
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
-variable "region" {
-  default = "ap-northeast-1"
-}
-
-provider "aws" {
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
-  region = var.region
-}
-
 resource "aws_vpc" "jikankanriVpc" {
   cidr_block = "192.168.0.0/16"
   instance_tenancy = "default"
@@ -106,9 +91,6 @@ resource "aws_eip" "jikankanriEip" {
   vpc      = true
 }
 
-output "public_ip" {
-  value = aws_eip.jikankanriEip.public_ip
-}
 
 # rds
 resource "aws_security_group" "jikankanriRdsSg" {
@@ -162,8 +144,4 @@ resource "aws_db_instance" "jikankanriRds" {
   availability_zone = "ap-northeast-1a"
   db_subnet_group_name = aws_db_subnet_group.jikankanriRdsSubnetGroup.name
   skip_final_snapshot  = true
-}
-
-output "db_endpoint" {
-  value = aws_db_instance.jikankanriRds.endpoint
 }
