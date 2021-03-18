@@ -46,7 +46,11 @@ resource "aws_cloudfront_distribution" "myCloudfront" {
 
   # とりあえずCloudFrontドメインの証明書を利用
   # Route53&ACM設定が終わった後で、自ドメインの証明書に変更します
+  # aliases = [ var.site_domain ]
   viewer_certificate {
     cloudfront_default_certificate = true
+    # acm_certificate_arn = aws_acm_certificate_validation.acmCertValid.certificate_arn
+    # ssl_support_method = "sni-only"
+    # minimum_protocol_version = "TLSv1"
   }
 }
