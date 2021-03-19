@@ -17,6 +17,12 @@ resource "aws_cloudfront_distribution" "myCloudfront" {
   is_ipv6_enabled     = true
   comment             = var.site_domain
   default_root_object = "index.html"
+  custom_error_response {
+    error_code = 403
+    response_code = 200
+    error_caching_min_ttl = 0
+    response_page_path = "/"
+  }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
