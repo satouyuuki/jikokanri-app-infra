@@ -1,6 +1,7 @@
 resource "aws_vpc" "jikankanriVpc" {
   cidr_block = "192.168.0.0/16"
   instance_tenancy = "default"
+  enable_dns_hostnames = true
   tags = {
     Name = "jikankanri-vpc"
   }
@@ -62,7 +63,14 @@ resource "aws_security_group" "jikankanriSg" {
     from_port = 80
     to_port = 80
     protocol = "tcp"
-    cidr_blocks = ["147.192.123.0/24"]
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {

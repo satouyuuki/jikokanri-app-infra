@@ -14,3 +14,10 @@ output "db_endpoint" {
 output "zone_name_servers" {
   value = aws_route53_zone.root.name_servers
 }
+
+output "public_dns" {
+  value = aws_instance.jikankanriEc2.*.public_dns[0]
+}
+# output "public_dns_not_exist" {
+#   value = aws_instance.jikankanriEc2.public_dns[0]
+# }

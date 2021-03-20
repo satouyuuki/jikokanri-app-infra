@@ -9,6 +9,9 @@ variable "region" {
 variable "site_domain" {
   default = "app.sy-jikankanri.work"
 }
+variable "api_server_domain" {
+  default = "api.sy-jikankanri.work"
+}
 variable "root_domain" {
   default = "sy-jikankanri.work"
 }
