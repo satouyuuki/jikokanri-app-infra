@@ -24,8 +24,6 @@ resource "aws_route53_record" "api" {
   zone_id = aws_route53_zone.root.zone_id
   name    = var.api_server_domain
   type    = "A"
-  # ttl = 60
-  # records = [aws_eip.jikankanriEip.public_ip]
   alias {
     name = aws_lb.myAlb.dns_name
     zone_id = aws_lb.myAlb.zone_id

@@ -90,4 +90,9 @@ resource "aws_cloudfront_distribution" "myCloudfront" {
     ssl_support_method = "sni-only"
     minimum_protocol_version = "TLSv1"
   }
+  logging_config {
+    include_cookies = false
+    bucket          = aws_s3_bucket.jikokanriLogs.bucket_domain_name
+    prefix          = "cloudfront/"
+  }
 }

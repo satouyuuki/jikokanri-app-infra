@@ -4,6 +4,12 @@ resource "aws_security_group" "jikankanriElbSg" {
   description = "jikankanri_security_group_elb"
   vpc_id      = aws_vpc.jikankanriVpc.id
   ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
     from_port = 443
     to_port = 443
     protocol = "tcp"
@@ -16,6 +22,28 @@ resource "aws_security_group" "jikankanriElbSg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+# resource "aws_elb" "myAlb" {
+#   name               = "jikokanriAlb"
+#   security_groups = [ aws_security_group.jikankanriElbSg.id ]
+#   subnets = [ 
+#     aws_subnet.jikankanriApp1a.id, 
+#     aws_subnet.jikankanriApp1c.id
+#   ]
+#   tags = {
+#     Name = "jikokanri-terraform-elb"
+#   }
+
+#   listener {
+#     instance_port      = 80
+#     instance_protocol  = "http"
+#     lb_port            = 443
+#     lb_protocol        = "https"
+#     ssl_certificate_id = aws_acm_certificate_validation.elbAcmValid.certificate_arn
+#   }
+
+#   instances = [aws_instance.jikankanriEc2.id]
+# }
 
 # elbじゃなくalbじゃなくlbらしい
 resource "aws_lb" "myAlb" {
@@ -30,15 +58,19 @@ resource "aws_lb" "myAlb" {
   tags = {
     Name = "jikokanri-terraform-elb"
   }
+  access_logs {
+    bucket  = aws_s3_bucket.jikokanriLogs.id
+    prefix  = "elb"
+    enabled = true
+  }
 }
 
 resource "aws_lb_listener" "myAlbListener" {
   load_balancer_arn = aws_lb.myAlb.arn
-  port              = "443"
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate_validation.elbAcmValid.certificate_arn
-
+  port              = "80"
+  protocol          = "HTTP"
+  # ssl_policy        = "ELBSecurityPolicy-2016-08"
+  # certificate_arn   = aws_acm_certificate_validation.elbAcmValid.certificate_arn
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.myAlbTg.arn

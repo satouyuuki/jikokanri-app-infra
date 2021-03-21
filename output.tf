@@ -18,6 +18,9 @@ output "zone_name_servers" {
 output "public_dns" {
   value = aws_instance.jikankanriEc2.*.public_dns[0]
 }
+output "alb_dns_name" {
+  value = aws_lb.myAlb.dns_name
+}
 # output "public_dns_not_exist" {
 #   value = aws_instance.jikankanriEc2.public_dns[0]
 # }

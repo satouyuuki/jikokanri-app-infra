@@ -1,9 +1,13 @@
 /**
  * s3
  **/
- resource "aws_s3_bucket" "site" {
+resource "aws_s3_bucket" "site" {
   bucket = var.bucket_name
   acl = "private"
+}
+resource "aws_s3_bucket" "jikokanriLogs" {
+  bucket = "jikokanri-logs"
+  acl = "public-read-write"
 }
 resource "aws_s3_bucket_policy" "name" {
   bucket = aws_s3_bucket.site.id
