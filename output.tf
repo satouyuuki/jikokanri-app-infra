@@ -24,3 +24,10 @@ output "alb_dns_name" {
 # output "public_dns_not_exist" {
 #   value = aws_instance.jikankanriEc2.public_dns[0]
 # }
+
+output "user_pool_id" {
+  value = aws_cognito_user_pool.jikokanriUserPool.id
+}
+output "user_pool_client_id" {
+  value = aws_cognito_user_pool_client.jikokanriUserPoolClient.id
+}
