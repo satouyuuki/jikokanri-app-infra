@@ -50,8 +50,8 @@ resource "aws_cloudfront_distribution" "myCloudfront" {
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
+    default_ttl            = 0
+    max_ttl                = 0
   }
 
   ordered_cache_behavior {
@@ -61,6 +61,7 @@ resource "aws_cloudfront_distribution" "myCloudfront" {
     target_origin_id = local.ec2_origin_id
 
     forwarded_values {
+      headers = ["Authorization"]
       query_string = false
       cookies {
         forward = "none"
@@ -69,8 +70,8 @@ resource "aws_cloudfront_distribution" "myCloudfront" {
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
+    default_ttl            = 0
+    max_ttl                = 0
   }
 
   restrictions {
